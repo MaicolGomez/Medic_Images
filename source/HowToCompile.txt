@@ -1,0 +1,2 @@
+nvcc -arch=sm_20 -lpthread test.cu
+

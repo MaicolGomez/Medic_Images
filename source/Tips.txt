@@ -1,0 +1,12 @@
+Tips y problemas que surgieron en CUDA:
+
+1) Para compilar usar nvcc -arch=sm_20 -lpthread CodeName.cu //con el comando -arch=sm_20 se podra imprimir dentro de las funciones del GPU
+2) Siempre liberar la memoria de CUDA, de otra forma dara segmentation Faul (CudaFree)
+3) Para una variable primitiva se puede pasar directo de host a las funciones CUDA, sin pre-procesamiento previo
+4) Al separar memoria con cudaMalloc, no necesariamente se inicializa en 0, se puede usar:
+		cudaMemset( (void *)dev_features , 0.0, 2 * scale * orientation * sizeof(double) )
+5) Siempre tener en cuenta la cantidad de Thread que se lanza, el producto de las 3 dimensiones no debe ser superior a 1024, y cada uno de las dimensiones debe ser x <= 1024 , y <= 1024 y z <= 64
+6) No se puede usar cudaMalloc or cudaMemcpy dentro del kernel (funciones global o device) ya que necesita un puntero del host
+7) No crear memoria dentro del Kernel (GPU), es lento y no recomendable, se prefiere crear o separar la memoria dentro de una libreria en CPU
+8) A partir de una tarjeta Kepler Capability 3.5 se puede usar memoria unificada
+9) Cuidado con los valores obtenidos por funciones matematicas en el kernel al usar CUDA, como log, exp, atan2, cos --->intentar reducir la precision usando floats

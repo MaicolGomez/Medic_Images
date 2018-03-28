@@ -1,0 +1,2 @@
+ATENCAO
+As imagens estao no diretorio c:\ImagesDicom.
